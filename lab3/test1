@@ -1,0 +1,14 @@
+#!/bin/bash
+(
+(tail -n 0 -f test.in) | while true
+do
+	sleep 5
+	read line
+	if [[ $line == "Sharks are coming" ]]
+	then
+		echo "Saved"
+		kill -EXIT $(cat .pid)
+		exit
+	fi
+done
+) 2> /dev/null

@@ -1,0 +1,29 @@
+#!/bin/bash
+
+echo $$ > .pid
+
+mod="live"
+
+exit()
+{
+	mod="kill"
+}
+
+trap 'exit' EXIT
+
+rm test.in
+for((i = 0; i < 4; i++))
+do
+	echo "Sea is warm" >> test.in
+	sleep 1
+done
+for((i = 0; i < 3; i++))
+do
+	echo "Sharks are coming" >> test.in
+	if [[ $mod == "kill" ]]
+		then exit 1
+	fi
+	sleep 1
+done
+echo "They are here" >> test.in
+exit 2
